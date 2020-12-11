@@ -16,10 +16,12 @@ class Injector
      */
     public function injectScripts($content)
     {
-        $content = (string) view('serve_livereload::script', [
+        $script = (string)view('serve_livereload::script', [
             'host' => '127.0.0.1',
             'port' => ServeWebSocketsCommand::port(),
-        ]).$content;
+        ]);
+
+        $content = str_replace('<head>', '<head>' . $script, $content);
 
         return $content;
     }
